@@ -21,3 +21,13 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+target
+tomcat.8080
+tomcat.5000
+#Preventing local(windows) config to mess with deployment configuration
+Procfile
+# IntelliJ Idea project files
+.idea
+*.iml
+entries.*

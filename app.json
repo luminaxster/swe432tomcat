@@ -1,0 +1,12 @@
+{
+  "name": "SWE 432 Heroku Tomcat",
+  "description": "Simple Heroku Java Web Application Using Embedded Tomcat",
+  "repository": "https://github.com/luminaxster/swe432tomcat",
+  "logo": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Tomcat-logo.svg",
+  "keywords": [
+    "java",
+    "tomcat",
+    "gmu",
+    "swe"
+  ]
+}
