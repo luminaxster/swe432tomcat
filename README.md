@@ -1,91 +1,87 @@
+*Author:* David Gonzalez, spring 2020
+
+*Modified by:* Jeff Offutt, summer 2020
+
 # Using Heroku to deploy servlets and JSPs
 
-This tutorial will show you how to deploy and develop a Heroku app that runs servlets and JSPs.
-There are two activities covered in this tutorial: deployment will cover how to obtain a remote repository, making a copy of it in your own repository, persisting changes from your local instance to your remote one in GitHub and automatically deploy your app in Heroku, and development will cover how to build and run your app locally.
+This tutorial explains how to deploy and develop a Heroku app that runs servlets and JSPs through GitHub. The tutorial covers creating GitHub and Heroku accounts, deploying serlvets to a Heroku app, developing web apps locally, and using a database to persist data.
 
 Check the currently deployed version: https://swe432tomcat.herokuapp.com
 
-## Prelude
-We are working with two different phases of the software lifecycle: **development**(programming, debugging, program testing) and **deployment**(publishing your app in your servers so clients can use it).  Heroku offers a hosting service for your web app and can be linked with GitHub to auto-deploy it, and also offers development tools so you can run your app locally.
+## 1. Prelude
+To develop web apps, it is important to mentally separate development from deployment. Development includes design, programming testing and debugging. Development is usually done locally on the developer's computer. Deploying is the process of publishing a web app to a server so users can access it, including compiling, installing executable in appropriate directories, checking connections to resources such as databases, and creating the URLs that clients will use to run the web app. In a large project, these issues can get quite complex and professional deployers take care of it. Our deployment will be simpler and student accessible. Heroku is a free hosting service for web apps than can be linked with GitHub to auto-deploy. Heroku also offers development tools so you can test and debug your app locally.
 
-**Disclaimer:** Please take a moment to explore each concept, technology, command, activity and action used in this tutorial, for brevity the level of detail is limited to help you deploy servlets in Heroku. 
+Please take a moment to explore each concept, technology, command, activity, and action used in this tutorial. We try to strike a balance between brevity and completeness, and welcome feedback and suggestions.
 
-## Quick Reference
-Use these terminal commands only if you already followed this tutorial and want a quick reminder of common tasks:
+## 2. Quick Reference
+These command line statements are here for a quick reminder of details in the tutorial.
 
 ### Redeploying the app by pushing changes to the remote repo
 ```ShellSession
 git a . & git c -m "TODO: I really should explain these changes" & git push
 ```
 
-### Rerunning the app locally after some edits
+### Rerunning the app locally after changes
 ```ShellSession
 mvn package & heroku local
 ```
 
-## Create GitHub and Heroku accounts
+## 3. Create GitHub and Heroku accounts
 
-You can create accounts for free in both platforms (do not provide any payment info).
+You can create free accounts on both platforms (you do not need to provide any payment info).
 
-### GitHub
+Create a GitHub account on https://github.com/.
+Create a Heroku account on https://signup.heroku.com/.
 
-Go to https://github.com/join and create your account.
+You may optionally use Heroku's GitHub student package.
 
-### Heroku
+Your assignments' repo must be private at all times. To grade your assignments, we must have access to your GitHub repo, thus you must add both the TA and instructor as contributors. We will share our usernames on the discussion board.
 
-Go to https://signup.heroku.com to create your account.
+## 4. Deployment: Create a Git repo (repository) and and link it to a Heroku app
+You can install Git on your local machine from Git's [download site](https://git-scm.com/downloads). Now, follow steps A—F to bring this repo into your Github account:
 
-Optional: You can use the GitHub student package found at https://www.heroku.com/github-students. 
-
-## Deployment: Create a Git repo(sitory) and and link it to a Heroku app 
-
-If you have not installed Git before, you can get it here: https://git-scm.com/downloads.
-
-Now, follow these steps to bring this repo into your Github account:
-
-### 1. Get this repo locally in your machine:
-This code contains all necessary boilerplate for supporting servlets and JSPs in a Heroku app, in a terminal:
+### A. Get this repo locally in your machine:
+This code contains all necessary boilerplate for supporting servlets and JSPs in a Heroku app through a terminal (command-line) window:
 ```ShellSession
 git clone https://github.com/luminaxster/swe432tomcat.git
 ```
 
-### 2. Create an empty repo in your Github:
+### B. Create an empty repo in your Github:
+1. Go to Github, login into your account, select the "repositories" tab, click on ”New.” Once in the "Create a new repository" page: give a name to your repo, make it private and let other options default, and click on "create repository".
 
-a. Go to [Github](www.github.com), login into your account, select the "repositories" tab, click on "New". Once in the "Create a new repository" page: give a name to your repo, make it private and let other options default, and click on "create repository".
-
-c. This will take you to your new repository's page. Copy the url to access your repo in the quick setup section.
-It should look like this:
+2. This will take you to your new repository's page. Copy the url to access your repo in the quick setup section. It should look like this:
 
 ```HTTP
 https://github.com/<your_username>/<newly_created_repo_name>.git
 ```
+We will use this URL in subsequent steps.
 
-We will use this URL in step 3.
+### C. Redirect the local repo to your own repo and save the changes:
+Remember to replace the url from step 2 (`https://github.com/<your_username>/<newly_created_repo_name>.git`) with your own repo’s url.
 
-### 3. Redirect the local repo to your own repo and save the changes:
+1. Setting up your remote repo in Git
 
-Remember to replace the url from step 2 ( `https://github.com/<your_username>/<newly_created_repo_name>.git` ) with your own repo's url.
-
-#### a. Setting up your remote repo in Git
-The following commands **only need have to be used once**, in a terminal:
+Only use the following commands once, in a terminal command-line window:
 ```ShellSession
 cd swe432tomcat
 git init
 git remote set-url origin "https://github.com/<your_username>/<newly_created_repo_name>.git"
 ```
-#### b. Push your local changes into your remote repo
-The following commands **will be reused every time you want to send your changes to GitHub**, in a terminal:
+2. Push your local changes into your remote repo
+
+Reuse the following commands every time you need to send your changes to GitHub, in a terminal command-line window:
+
 ```ShellSession
 git add .
 git commit -m "Initial commit: cloned repo"
 git push
 ```
-Remember to be explicit with your commit messages, this will document the rationale of your code changes and be seen in each file history by everyone wanting to contribute to your project, or even you after a month not looking at the file.
-### 4. Create a Heroku app
+Be clear and explicit with your commit messages. The idea is to document why you made the changes so that everyone who wants to contribute to your project understand, including you after a month not looking at the file.
 
-Go to https://dashboard.heroku.com/apps: click on "New" > "Create New App", provide a name, and click on "create app".
+### D. Create a Heroku app
+Go to your [Heroku dashboard](https://dashboard.heroku.com/apps). Click on **New > Create New App**, provide a name, and click on **create app**.
 
-### 5. Link repo and deploy 
+### E. Link repo and deploy
 
 Once in your Heroku app web page, select the "deploy" tab:
 
@@ -103,64 +99,72 @@ Once in your Heroku app web page, select the "deploy" tab:
  
  g. Once your deploy is processed, click on "View"
  
-### Updating your repo and redeploying
+ Once in your Heroku app web page, select the **deploy** tab:
+ 1. Set the deploy method to **Github**
+ 2. Authorize Heroku to access your GitHub repositories
+ 3. Select the recently created repo
+ 4. Click on **connect**
+ 5. Activate automatic deploys
+ 6. Click on **deploy the master branch** (only this time so you can see the changes immediately)
+ 7. Once your deployment is processed, click on **View**
+ 
+### F. Updating your repo and redeploying
 
-You only have to push your changes on your repo and they will redeploy automatically.
+Your changes will be redeployed automatically when you push them to your repo.
 
-## Development: Running your app locally
+## 5. Development: How to run web apps locally
 
-Before deploying your app in the Web, you normally program, debug and test your app locally. To do so, we will need Apache Maven to build your app and Heroku CLI to run it locally. 
+Before deploying web app to GitHub & Heroku, developers program, debug, and test apps locally. This section explains how to use Apache Maven and Heroku's command line interface (CLI) to run web apps locally. We walk through installing Maven and Heroku, then running an app locally, updating an app, and continuous loop deployment.
 
-#### Apache Maven installation
+#### A. Installing Apache Maven
 
-If you have not installed Apache Maven before, you can get the binaries here: https://maven.apache.org/download.cgi, and follow the instructions here: https://maven.apache.org/install.html.
+If you have not installed Apache Maven before, get the binaries from the [Apache Maven Project](https://maven.apache.org/download.cgi), and follow the instructions from Maven’ [installation page](https://maven.apache.org/install.html).
 
-Note: if you are using a *Unix-like* system (e.g MacOS, Linux), you need to open a terminal and add the path to Maven permanently in your bash profile:
+Note: If you are using a Unix-like system (MacOS, Linux, ect.), open a command-line terminal window and add the path to Maven permanently in your bash profile:
+
 ```ShellSession
 vi ~/.bash_profile
 ```
-And add the following line to this file so Maven is runnable from the terminal from now on:
+Add the following line to allow you to run Maven the terminal:
+
 ```ShellSession
 export PATH=/opt/apache-maven-3.6.3/bin:$PATH
 ```
-The line above assumes Maven's path is `/opt/apache-maven-3.6.3/bin`, or that your Maven download has been moved there. You can use a different path too, make sure your path is reflected in this line.
+If you have a later version of Maven or installed it in a different place, change the path accordingly.
 
-For Windows machines, add Maven's path to the PATH property in the system's environment variables.
+If your machine runs Windows, add Maven’s path to the PATH property in the system’s environment variables.
 
-**Note:** Reopen your terminal for the changes to be reflected.
+**Note:** You will need to open a new terminal window to reflect the path change.
 
-#### Heroku CLI installation
-If you have not installed the Heroku CLI  before, you can get it here: https://devcenter.heroku.com/articles/heroku-cli.
+#### B. Installing Heroku’s CLI
+If you have not installed the Heroku CLI before, download it from the [Heroku Dev Center](https://devcenter.heroku.com/articles/heroku-cli).
 
-For Windows machines, this repo's [Procfile](https://github.com/luminaxster/swe432tomcat/blob/master/Procfile) is set up for Unix-like machines, "sh" is the shell command in Unix . In Windows, replace the following line in the Procfile:
+By default, the example repo’s [Procfile](https://github.com/luminaxster/swe432tomcat/blob/master/Procfile) is set for Unix-like machines using “sh” as the shell command in Unix. For Windows, replace the following line in the Procfile:
+
 ```ShellSession
 web: sh target/bin/webapp
 ```
- 
-for the following:
+with this line:
+
 ```ShellSession
 web: target\bin\webapp.bat
 ```
-**Note:** If you are Windows user, do not push your Procfile to your remote repo. An error like this one will be thrown:
-`"targetbinwebapp not found" error and then an "app crashed" error with code H10 ...`.
-
-### Build and run your app
-To run the app contained in your repo, go your repo's root folder, the `POM.xml` should be there, this file is the configuration Maven uses to build your app so Heroku can run it. You should perform the following commands each time you want to run the latest version of your app, make sure there are no errors after you run them. 
-
-Run this command in your terminal to build the app:
+Note: If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error: 
 ```ShellSession
-mvn package
+"targetbinwebapp not found" error and then an "app crashed" error with code H10 ...
 ```
 
-And this one to run it:
+### C. Build and run your app
+To run an app contained in your repo, edit the file `POM.xml` in your repo’s root folder. Maven uses this configuration file to build your app so Heroku can run it. Run the following two commands to build and run your app:
 
 ```ShellSession
+mvn package
 heroku local
 ```
 
-You should be able to access your app at `http://localhost:5000`.
+If the commands succeed, you should be able to access your app at: `http://localhost:5000`.
 
-### Making changes: adding a new servlet
+### D. Adding a new servlet
 
 In your machine, place your servlet file in the `src/main/java/servlet` folder and add the servlet annotation so your Apache Tomcat knows how to map it:
 ```Java
@@ -174,13 +178,23 @@ Now you can observe, debug or test your app locally by building your app (in ter
 
 **Note:** If your servlet mapping setup failed or is missing, the URL `localhost:5000/servicePathName` or `yourWebsite/servicePathName` won't be accessible and show a `404: Not found error`. Make sure the `@WebServlet` annotation is in the desired servlet java file and the `localhost:5000/servicePathName` matches `@WebServlet.. urlPatterns = {"/servicePathName"}`.
 
-## Developing and Deploying continuous loop
 
-Finally, once you are done making changes in your app locally -- you have achieved your development goals -- and now want to publish your app so users get the latest version -- deploy your app, pushing your local changes to your repo will automatically deploy this version of the app in your Heroku hosting (described in the Deployment section). 
+Place your servlet file in the folder `src/main/java/servlet` folder and add the servlet annotation so your Apache Tomcat knows how to map it:
+```Java
+import javax.servlet.annotation.WebServlet;
+...
+@WebServlet( name = "servletName", urlPatterns = {"/servicePathName"} )
+```
+The line above handles **servlet mapping**, which makes its servlet instance available at **yourServerUrl/servicePathName**. That is, the `@WebServlet` annotation “maps” the name of the servlet, `servletName`, to the path `yourServerUrl/servicePathName`, which is appended after the port number 5000. Now you can run your app locally.
 
-## Important
-After you are satisfied changing your code, remember they are still in your machine. You must push these changes to your github's web repo (remote), only then they will be visible to everybody. If you followed the steps linking your Heroku app with this repo, pushing changes in to your remote repo will redeploy your Heroku app.
+Note: If your servlet mapping setup failed or is missing, you will not be able to access the URL `localhost:5000/servicePathName` or `yourWebsite/servicePathName`. Instead, the server will return a `404: Not found error`. Make sure the `@WebServlet` annotation is in the servlet Java file and the `localhost:5000/servicePathName` matches `@WebServlet.. urlPatterns = {"/servicePathName"}`.
 
+## E. Don’t forget to deploy your app to Heroku’s server!
+
+Just because your app works locally, does not mean we can run and grade it. The two most common errors that novices make are:
+
+ 1. Forgetting to push the changes to your GitHub repo. When you are ready to share, be sure to push your app to your GitHub repo. It will automatically be deployed through Heroku.
+ 2. Forgetting to deploy-test the app. Sometimes apps that work correctly on your local machine will NOT work on the server. Common issues are path names, such as the difference between `/` and `\` on Windows and Unix systems, capitalization (Windows treats upper and lower case letters the same, but Unix does not), and external resources such as files and databases. **Be sure to run your app on the server to ensure it still works!**.
 # Add database persistence to your Heroku app
 Go to your Heroku dashboard, choose your Tomcat servlet app, go to the Resources tab, click on find add-ons, type  postgres, Heroku-Postrgres will show up, select it with Hobby dev (free) tier.
 
