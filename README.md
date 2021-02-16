@@ -6,7 +6,7 @@
 
 This tutorial explains how to deploy and develop a Heroku app that runs servlets and JSPs through GitHub. The tutorial covers creating GitHub and Heroku accounts, deploying serlvets to a Heroku app, developing web apps locally, and using a database to persist data.
 
-Check the currently deployed version: https://swe432tomcat.herokuapp.com
+Check the currently deployed version: [https://swe432tomcat.herokuapp.com](https://swe432tomcat.herokuapp.com)
 
 ## 1. Prelude
 To develop web apps, it is important to mentally separate development from deployment. Development includes design, programming testing and debugging. Development is usually done locally on the developer's computer. Deploying is the process of publishing a web app to a server so users can access it, including compiling, installing executable in appropriate directories, checking connections to resources such as databases, and creating the URLs that clients will use to run the web app. In a large project, these issues can get quite complex and professional deployers take care of it. Our deployment will be simpler and student accessible. Heroku is a free hosting service for web apps than can be linked with GitHub to auto-deploy. Heroku also offers development tools so you can test and debug your app locally.
@@ -30,15 +30,17 @@ mvn package & heroku local
 
 You can create free accounts on both platforms (you do not need to provide any payment info).
 
-Create a GitHub account on https://github.com/.
-Create a Heroku account on https://signup.heroku.com/.
+Create a GitHub account on [https://github.com/](https://github.com/).
 
-You may optionally use Heroku's GitHub student package.
+Create a Heroku account on [https://signup.heroku.com/](https://signup.heroku.com/).
+
+
+You may optionally use Heroku's [GitHub student package](https://www.heroku.com/github-students).
 
 Your assignments' repo must be private at all times. To grade your assignments, we must have access to your GitHub repo, thus you must add both the TA and instructor as contributors. We will share our usernames on the discussion board.
 
 ## 4. Deployment: Create a Git repo (repository) and and link it to a Heroku app
-You can install Git on your local machine from Git's [download site](https://git-scm.com/downloads). Now, follow steps A—F to bring this repo into your Github account:
+You can install Git on your local machine from [Git's download site](https://git-scm.com/downloads). Now, follow steps A—F to bring this repo into your Github account:
 
 ### A. Get this repo locally in your machine:
 This code contains all necessary boilerplate for supporting servlets and JSPs in a Heroku app through a terminal (command-line) window:
