@@ -157,7 +157,7 @@ Note: If you are Windows user, do not push your Procfile to your remote repo. Th
 ```
 
 ### C. Build and run your app
-To run an app contained in your repo, edit the file `POM.xml` in your repo’s root folder. Maven uses this configuration file to build your app so Heroku can run it. Run the following two commands to build and run your app:
+To run an app contained in your repo, look up for the file `POM.xml` in your repo’s root folder. Maven uses this configuration file to build your app so Heroku can run it. Run the following two commands to build and run your app:
 
 ```ShellSession
 mvn package
