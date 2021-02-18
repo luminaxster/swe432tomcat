@@ -4,7 +4,7 @@
 
 # Using Heroku to deploy servlets and JSPs
 
-This tutorial explains how to deploy and develop a Heroku app that runs servlets and JSPs through GitHub. The tutorial covers creating GitHub and Heroku accounts, deploying serlvets to a Heroku app, developing web apps locally, and using a database to persist data.
+This tutorial explains how to deploy and develop a Heroku app that runs servlets and JSPs through GitHub. The tutorial covers creating GitHub and Heroku accounts, deploying servlets to a Heroku app, developing web apps locally, and using a database to persist data.
 
 Check the currently deployed version: [https://swe432tomcat.herokuapp.com](https://swe432tomcat.herokuapp.com)
 
@@ -249,6 +249,7 @@ Windows users can also use the URL to create a `JDBC_DATABASE_URL` property in t
 **Remember:** `<your_heroku_app_name>` is the name of your heroku app.
 
 Check that the environment variable was set:
+
 *Unix*:
 ```ShellSession
 echo $JDBC_DATABASE_URL
