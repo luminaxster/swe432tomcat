@@ -9,7 +9,9 @@ This tutorial explains how to deploy and develop a Heroku app that runs servlets
 Check the currently deployed version: [https://swe432tomcat.herokuapp.com](https://swe432tomcat.herokuapp.com)
 
 ## 1. Prelude
-To develop web apps, it is important to mentally separate development from deployment. Development includes design, programming testing and debugging. Development is usually done locally on the developer's computer. Deploying is the process of publishing a web app to a server so users can access it, including compiling, installing executable in appropriate directories, checking connections to resources such as databases, and creating the URLs that clients will use to run the web app. In a large project, these issues can get quite complex and professional deployers take care of it. Our deployment will be simpler and student accessible. Heroku is a free hosting service for web apps than can be linked with GitHub to auto-deploy. Heroku also offers development tools so you can test and debug your app locally.
+To develop web apps, it is important to mentally separate development from deployment. Development includes design, programming testing and debugging. Development is usually done locally on the developer's computer. Deploying is the process of publishing a web app to a server so users can access it, including compiling, installing executable in appropriate directories, checking connections to resources such as databases, and creating the URLs that clients will use to run the web app. In a large project, these issues can get quite complex and professional deployers take care of it. Our deployment will be simpler and student accessible. Heroku is a free hosting service for web apps than can be linked with GitHub to auto-deploy. Heroku also offers development tools so you can test and debug your app **locally**. 
+
+In this repo, the Heroku app uses **Tomcat internally**, this in different from using standalone Tomcat or J2EE Glassfish. This means, deployment and development are done via Heroku commands. 
 
 Please take a moment to explore each concept, technology, command, activity, and action used in this tutorial. We try to strike a balance between brevity and completeness, and welcome feedback and suggestions.
 
@@ -197,22 +199,28 @@ Just because your app works locally, does not mean we can run and grade it. The 
 
  1. Forgetting to push the changes to your GitHub repo. When you are ready to share, be sure to push your app to your GitHub repo. It will automatically be deployed through Heroku.
  2. Forgetting to deploy-test the app. Sometimes apps that work correctly on your local machine will NOT work on the server. Common issues are path names, such as the difference between `/` and `\` on Windows and Unix systems, capitalization (Windows treats upper and lower case letters the same, but Unix does not), and external resources such as files and databases. **Be sure to run your app on the server to ensure it still works!**.
-# Add database persistence to your Heroku app
-Go to your Heroku dashboard, choose your Tomcat servlet app, go to the Resources tab, click on find add-ons, type  postgres, Heroku-Postrgres will show up, select it with Hobby dev (free) tier.
+# 6. Persistence: How to use a database with Heroku
+**You only need this section to persist data into a database and can skip it otherwise**.
 
-**Or**, in a terminal:
+Accessing a database may be different on your local machine and on Heroku—this description is for Heroku only. Also note that this is not a general tutorial on using databases from Java programs, but just the specific incantations your program needs to use a Postgres database on Heroku.
+
+Set up to use Postgres on Heroku through the Heroku dashboard. Choose your **Tomcat servlet app** on your dashboard, go to the **Resources** tab, click on **find add-ons**, type **Postgres**, and Heroku-Postrgres should appear. Select it with the **Hobby dev** (free) tier.
+
+You can also do this from a terminal command-line window:
 ```ShellSession
 heroku addons:create heroku-postgresql:hobby-dev --app <your_heroku_app_name>
 ```
-**Remember:** `<your_heroku_app_name>` is the name of your heroku app.
+Note that `<your_heroku_app_name>` is the name of your Heroku web application.
 
-## Install PostgreSQL
-You can get Postgres [here](https://postgresapp.com/downloads.html) and choose your platform binaries.
-
-*Windows:* Using the wizard will install the DB, services and basic tools we need to manage and query the database.
+This section is quite long and is not necessary to run servlets or JSPs. This section discusses installation, configuring, using the command line interface (CLI) and Java to use the database.
 
 
-*Mac:* Select Postgres.app with PostgreSQL 12. Then execute this command in your terminal:
+## A. Install PostgreSQL
+Get Postgres from the [Postgres download page](https://postgresapp.com/downloads.html).
+
+*Windows*: The wizard will install the DB, services, and basic tools needed to manage and query the database.
+
+*MacOS*: Select and install Postgres.app with PostgreSQL 12. Then execute this command in your terminal:
 ```ShellSession
 sudo mkdir -p /etc/paths.d &&
 echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp
@@ -222,48 +230,63 @@ Reopen the terminal and try:
 which psql
 ```
 
-It should return a file system path like `/Applications/Postgres.app/Contents/Versions/latest/bin/psql`.
+It should return a file system path that looks like this:`/Applications/Postgres.app/Contents/Versions/latest/bin/psql`.
 
-## Configure the connection to your remote DB add-ons in Heroku
-In order for your Java applications to access the DB via JDBC, you need to setup the connection. In your terminal, execute:
+## B. Configure the connection to your remote DB add-ons in Heroku
+Java programs access databases using a library package called Java DataBase Connectivity (JDBC). This tutorial does not teach JDBC, but you will need to use it. For your Java applications to access the DB via JDBC, set up the connection as follows:
+
+If you use a *Unix-Like* system, run the command:
 ```ShellSession
 export JDBC_DATABASE_URL=`heroku run echo \\$JDBC_DATABASE_URL -a <your_heroku_app_name>
 ```
+If you use *Windows*, run the commands separately. The first command will return a URL, which you use in the second command to define the environment variable:
+```ShellSession
+heroku run echo \$JDBC_DATABASE_URL -a <your_heroku_app_name>
+setx JDBC_DATABASE_URL "<URL>"
+```
+Windows users can also use the URL to create a `JDBC_DATABASE_URL` property in the system’s environment variables with that URL.
+
 **Remember:** `<your_heroku_app_name>` is the name of your heroku app.
 
-Double check the environment variable was set:
-```
+Check that the environment variable was set:
+*Unix*:
+```ShellSession
 echo $JDBC_DATABASE_URL
+```
+*Windows*:
+```ShellSession
+echo %JDBC_DATABASE_URL
 ```
 It should return a string like `jdbc:postgresql://...`.
 
-**Note:** This configuration will be lost once you close the terminal, do no try to make it permanent, the crendentials are renovated often.
+The echo command should return a string like `jdbc:postgresql://...`.
 
-### Connect to you database via CLI
-In your terminal, enter to your DB with the following command:
+**Note:** This configuration will be lost when you close the terminal window. Since the credentials are regularly removed, there is no benefit to making it permanent.
+
+### C. Connect to the database via a command line interface (CLI)
+Enter the DB with the following command:
 ```ShellSession
 heroku pg:psql <your_postgresql_add_on_name> --app <your_heroku_app_name>
 ```
-**Remember:** `<your_heroku_app_name>` is the name of your heroku app, and `<your_postgresql_add_on_name>` is your postgres add-on name.
+**Remember:** `<your_heroku_app_name>` is the name of your heroku app, and `<your_postgresql_add_on_name>` is your Postgres add-on name.
 
-You can get your precise command from your Postgres add-on dashboard, go to settings > admistration > view credentials > **Heroku cli**
+You can get your *precise* command from the Heroku web page. Login to your account, go to the add-ons dashboard, and select the Postgres add-on created some steps before. Then go to **settings > admistration > view credentials > Heroku cli**.
 
-Once that command executes correctly, you should be now using the database CLI, in your shell, the input should look like this:
+Once that command works, you can use the database CLI. In your terminal window, the input should look like this:
 ```ShellSession
 <your_heroku_app_name>::DATABASE=>
 ```
-Now you run DB management and query commands like:
+Now run DB management and query commands like:
 ```SQL
 CREATE TABLE test(id SERIAL PRIMARY KEY, value VARCHAR (50) NOT NULL);
 INSERT INTO test (value) VALUES ('a value');
 SELECT name FROM test;
 ```
-## Connecting to the database within your app: The Database Servlet
-This project has an [example](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java) using Java DataBase Connection(JDBC), there are plenty of ways to use Java or related frameworks APIs to connect to databases elsewhere.
-
-Follow the next sections to follow how the Database Servlet was implemented. 
+## D. Connecting to the database within your app: The Database Servlet
+Our example project has an example Java class, [DatabaseServlet.java](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java), which uses JDBC. This is but one of many possible ways to use databases. The following seven subsections explain how the database servlet was implemented.
+ 
 ### 1. Manage and query your database
-In your database CLI (the same accessed in [a previous section](blah)), create the folowing table, it is required by the [DB servlet](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java) to work:
+[DatabaseServlet.java](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java) needs the database table to be created before it can run. Do this from your CLI terminal window:
 
 ```SQL
 CREATE TABLE entries( 
@@ -273,17 +296,14 @@ CREATE TABLE entries(
 );
 ```
 
-Try adding a row to the table:
+As a check, add a row to the table and then query the data from that row:
 ```SQL
 INSERT INTO entries (name, age) VALUES ('Logan', 149);
-```
-Or querying persisted data in that table:
-```SQL
 SELECT name, age FROM entries;
 ```
 
-### 2. Add Postgres to your app
-You need to add Postgres to your dependencies in your `pom.xml`:
+### 2. Add Postgres to your web app
+You need to add Postgres to your dependencies in your `pom.xml` file:
 ```XML
 </dependencies>
     ...
@@ -296,7 +316,7 @@ You need to add Postgres to your dependencies in your `pom.xml`:
 </dependencies>
 ```
 ### 3. Sanity Check
-Try to run the app locally, at a terminal in your app's root folder:
+To make sure you have the database set up correctly, run the web app locally, from a terminal in your app's root folder:
 ```ShellSession
 mvn package
 heroku local
@@ -305,11 +325,11 @@ The terminal should show a line like:
 ```ShellSession
 INFO: Starting ProtocolHandler ["http-nio-5000"]
 ```
-Your Tomcat server should be up and running at `localhost:5000`, and the database servlet should be at `localhost:5000/database`.
+Your Tomcat server should be up and running a `localhost:5000`, and the database servlet should be at `localhost:5000/database`.
 
-**Note:** To stop the server from running, press `Ctrl+C`.  If you close the terminal, the server will stop as well. 
+Note: To stop the server from running, press `Ctrl+C` or close the terminal.
 
-### 4. Connecting to database in the servlet
+### 4. Connecting to the database in the servlet
 ```Java
 ...
 private class EntriesManager{
@@ -320,11 +340,11 @@ private class EntriesManager{
       }
       ...
 ```
-This lines are where adding Postgres as a dependency, and configuring the environment variable come together, missing any of these steps will cause a runtime error. In `String dbUrl = System.getenv("JDBC_DATABASE_URL");`, the environment variable is used `JDBC_DATABASE_URL`, make sure it is setup with `echo $JDBC_DATABASE_URL`. Then in `return DriverManager.getConnection(dbUrl);`, the Postgres database driver is detected based on the previous URL, the driver manager will look for it in your Postgres installed dependency and the use it to connect to the database with the credentiasl specified in the URL. 
+These statement add Postgres as a dependency and configure the environment variable. The statement `String dbUrl = System.getenv("JDBC_DATABASE_URL");` uses the environment variable `JDBC_DATABASE_URL`. You can check its value with the command `echo $JDBC_DATABASE_URL`. The statement `return DriverManager.getConnection(dbUrl);`retrieves the Postgres database driver from the previous URL, then connects to the database with the credentials provided in the URL.
+**Troubleshooting:** You may get an error like `java.sql.SQLException: The url cannot be null`. This means “JDBC_DATABASE_URL” is not saved in your profile as described in step *6.B* above.
 
-**Troubleshooting:** You may get an error like `java.sql.SQLException: The url cannot be null`. Since `"JDBC_DATABASE_URL"` is not saved to your profile, make sure is set up before running `heroku local`, this is explained in this [previous section](https://github.com/luminaxster/swe432tomcat/blob/master/README.md#configure-the-connection-to-your-remote-db-add-ons-in-heroku).
-
-### 5. Saving data into the database
+### 5. Persisting data into the database
+The following code is taken from method *save()* in [DatabaseServlet.java](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java):
 ```Java
 ...
 public boolean save(String name, int age){
@@ -340,13 +360,12 @@ public boolean save(String name, int age){
           return true;
           ...
 ```
-After getting a new or existing `connection`, preparing a statement to insert a row in table `entries`, the order of values set follow the sequence determined by the tuple `(name, age)` in the statement: `statement.setString(1, name)` is concatenated where the first question mark is in `(?, ?)` and ` statement.setInt(2, age)` to the second.
+After getting a `connection`, the method prepares a statement to insert a row into the table `entries`. The order of values is determined by the tuple `(name, age)`. The statements `statement.setString(1, name)` and `statement.setInt(2, age)` map the value 1 to variable `name` and value 2 to variable `age`. Finally, `statement.executeUpdate();` inserts the row.
 
-Finally,  `statement.executeUpdate();` will attempt to insert the row, if no errors are thrown, it does not mean it succeded, the return value of the method is a count of the affected rows, in this context `1` should be successfully inserted one row. 
-
-**Important:** Prepared statements prevent some types of SQL injection attacks. Using other API methods to do so will let your server vulnerable. more details in the next sections.
+**Important:** Prepared statements prevent some types of SQL injection attacks that other API methods allow.
 
 ### 6. Querying data from the database
+The following code from method *getAllAsHTMLTable()* retrieves all names and ages from the entries table, then displays them in an HTML table.
 ```Java
 public String getAllAsHTMLTable(){
         Statement statement = null;
@@ -371,17 +390,17 @@ public String getAllAsHTMLTable(){
         }catch(URISyntaxException uriSyntaxException){
         ...
 ```
-After gettign a new or exisitng connection the database, executing the query returns a ResultSet, which can be iterated. In this case were building a HTML table with rows obtained from the query result.
+After getting a connection to the database, executing the query returns an iterable `ResultSet`, which is stored in the variable `entries`. The `while` loop prints all name and age pairs in `entries`.
 
-**Important:** Using only `executeQuery()` to make querys prevents some types of SQL injection attacks. Using other API methods to do so will let your server vulnerable. For instance, using `executeUpdate()` to make queries will allow attackers to delete your database tables by ending the current statement and appending a delete update `; delete from entries`.
+**Important:** Using only `executeQuery()` to make querys prevents some types of SQL injection attacks that other API methods allow. For instance, using `executeUpdate()` to make queries can allow attackers to delete database tables by appending a delete command to the update statement: `; delete from entries`.
 
-### ImportantER: Avoid XSS attacks
-A common way to attack (web) apps is to inject malicious code in data captured from user inputs -- Cross-Site Scripting. Since it is common to generate HTML content from user data, an attacker may add executable code that will trigger in the page. For example, adding `<script>function xss(){location.href='https://www.google.com'} </script><button onclick="xss()">click me</button>` in the name in any of the Persistence examples will succeded on adding a malicious button that takes you to `google.com` once clicked. The database fails because of the table column not accepting more than 50 characters. However, `<script>function x(){location.href='s'}()</script>` fits.
-Consider using [Jsoup](https://jsoup.org/) to sanitize data when capturing user inputs in your services, and also when sending them back to your front-end. The Database example uses `Jsoup.clean()` when getting row's names from the database, and capturing string from the users `String name = Jsoup.clean(request.getParameter(Data.NAME.name()), Whitelist.basic());`.
+### 7. Important: Avoid cross-side scripting (XSS) attacks
+A common way to attack web apps is to inject malicious code into data that originates as user inputs. This is call cross-site scripting (XSS.) Since it is common to generate HTML content from user data, an attacker may add executable code that will trigger in the page. For example, adding `<script>function xss(){location.href='https://www.google.com'} </script><button onclick="xss()">click me</button>` as a name can add a malicious button that takes users to `google.com` when clicked.The database fails because the table column does not accept more than 50 characters. However, `<script>function x(){location.href='s'}()</script>` fits. A good way to avoid this (illustrated in our example) is to use [Jsoup](https://jsoup.org/) to sanitize data when accepting user inputs, and when sending them back to your front-end. The database example uses Jsoup.clean() when getting row’s names from the database, and when capturing strings from the users, as in: `String name = Jsoup.clean(request.getParameter(Data.NAME.name()), Whitelist.basic());`.
 
 **Always** use **sanitized** user inputs to assemble statements, and use **prepared statements** when concatenating **user inputs** in your queries or updates.
 
-### 7. Using both it the servlet
+### 8. Persisting data into a database from a servlet
+The following code from the *doPost()* method adds new data into the database.
 
 ```Java
 ... doPost(...
@@ -396,25 +415,15 @@ Consider using [Jsoup](https://jsoup.org/) to sanitize data when capturing user 
        PrintTail(out);
  ```
  
-Finally, the servlet can use database persistence via the EntryManager instance to save (`save(...)`) a new entry and rendering all the entries in the database in a HTML table (`getAllAsHTMLTable()`).
+The servlet uses database persistence via the **EntriesManager** instance to save (`save(name, age)`) a new entry, then renders all the entries in the database into an HTML table with *getAllAsHTMLTable()*.
 
-# Grading: sharing your repo with the TA
-Your assignment's repo must be private at all times and for me to grade your code, please add me as a contributor. My username is luminaxster.
-
-## Follow the original guide
+## 7. Resources 
 For more details about how to create a Tomcat setup from scratch, go to the Dev Center guide on how to [Create a Java Web Application using Embedded Tomcat](https://devcenter.heroku.com/articles/create-a-java-web-application-using-embedded-tomcat).
 
-## Resources: 
+- [Git Tutorial](https://kbroman.org/github_tutorial/pages/init.html)
 
-https://kbroman.org/github_tutorial/pages/init.html 
+- [Heroku Postgres](https://devcenter.heroku.com/articles/heroku-postgresql)
 
-https://devcenter.heroku.com/articles/heroku-postgresql
+- [Heroku Dataclips](https://devcenter.heroku.com/articles/dataclips)
 
-https://devcenter.heroku.com/articles/heroku-postgresql#local-setup
-
-https://devcenter.heroku.com/articles/dataclips
-
-https://www.vogella.com/tutorials/JavaXML/article.html
-
-
-
+- [Java XML writing and reading](https://www.vogella.com/tutorials/JavaXML/article.html)
