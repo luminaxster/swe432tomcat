@@ -28,6 +28,12 @@ git a . & git c -m "TODO: I really should explain these changes" & git push
 mvn package & heroku local
 ```
 
+### Heroku Dashboard
+In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you can:
+ - **Open App button:** It will open a new browser window with the URL of your currently deployed app.
+ - **Activity tab:** It lists all logs of each deployment attempt, check it if you get errors in your web app. Run the app locally to debug them.
+ - **Settings tab:** Here you can check your build packs, make sure you are using `heroku/java` for this project.
+
 ## 3. Create GitHub and Heroku accounts
 
 You can create free accounts on both platforms (you do not need to provide any payment info).
