@@ -159,7 +159,8 @@ with this line:
 ```ShellSession
 web: target\bin\webapp.bat
 ```
-Note: If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error: 
+
+**Note:** If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error: 
 ```ShellSession
 "targetbinwebapp not found" error and then an "app crashed" error with code H10 ...
 ```
@@ -264,7 +265,6 @@ echo $JDBC_DATABASE_URL
 ```ShellSession
 echo %JDBC_DATABASE_URL
 ```
-It should return a string like `jdbc:postgresql://...`.
 
 The echo command should return a string like `jdbc:postgresql://...`.
 
