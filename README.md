@@ -29,10 +29,10 @@ mvn package & heroku local
 ```
 
 ### Heroku Dashboard
-In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you can:
- - **Open App button:** It will open a new browser window with the URL of your currently deployed app.
- - **Activity tab:** It lists all logs of each deployment attempt, check it if you get errors in your web app. Run the app locally to debug them.
- - **Settings tab:** Here you can check your build packs, make sure you are using `heroku/java` for this project.
+In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you may want to check these elements:
+ - **Open App:** This button will open a new browser window with the URL of your currently deployed app.
+ - **Activity:** This tab contains all logs of each deployment attempt, check it if you get errors in your web app. Run the app locally to debug them.
+ - **Settings:** this tab lets you check your build packs, make sure you are using `heroku/java` for this project.
 
 ## 3. Create GitHub and Heroku accounts
 
