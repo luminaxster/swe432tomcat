@@ -10,6 +10,8 @@ import java.io.*;
 import java.util.*;
 import java.lang.*;
 
+import com.google.gson.Gson;
+
 // Used in https://codesandbox.io/s/swe-432-react-popcorn-sales-k3b9i?file=/src/popcorn.js
 // Part of the popcorn Ajax example.
 // The response software component.
@@ -22,18 +24,32 @@ public class zipLookup extends HttpServlet
    public void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException
    {
-      // response.setContentType("TEXT/HTML"); // not needed, just returns a string.
       // enable external requests
       response.setHeader("Access-Control-Allow-Origin", "*");
       response.setHeader("Access-Control-Allow-Methods", "*");
       response.setHeader("Access-Control-Allow-Headers", "*");
+      
+      response.setContentType("aplication/json");
      
       PrintWriter out = response.getWriter();
 
       String zip = request.getParameter("zip");
       String cityst = zipCityState.get(zip);
-      out.println(cityst);
-
+     
+      String state = null;
+      String city = null;
+      
+      Map<String, String> data = new HashMap<String, String>();
+      
+      if (cityst != null) {
+         String[] stateAndCity = cityst.split(", ");
+         state = stateAndCity[0];
+         city = stateAndCity[1];
+      }
+      
+      data.put("state", state);
+      data.put("city", city);
+      out.print(new Gson().toJson(data));
       out.close();
    }
 
