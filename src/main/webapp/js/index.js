@@ -1,1 +1,1 @@
-consolle.log("js/index.js script loaded");
+console.log("js/index.js script loaded");

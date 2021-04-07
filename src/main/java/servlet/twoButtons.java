@@ -3,6 +3,7 @@
 
         @author Jeff Offutt
 ********************************************************************* */
+// modified: David Gonzalez (uses @WebServlet, and js/ resource folder)
 
 // Import Java Libraries
 import java.io.*;
