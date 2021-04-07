@@ -9,9 +9,9 @@ This tutorial explains how to deploy and develop a Heroku app that runs servlets
 Check the currently deployed version: [https://swe432tomcat.herokuapp.com](https://swe432tomcat.herokuapp.com)
 
 ## 1. Prelude
-To develop web apps, it is important to mentally separate development from deployment. Development includes design, programming testing and debugging. Development is usually done locally on the developer's computer. Deploying is the process of publishing a web app to a server so users can access it, including compiling, installing executable in appropriate directories, checking connections to resources such as databases, and creating the URLs that clients will use to run the web app. In a large project, these issues can get quite complex and professional deployers take care of it. Our deployment will be simpler and student accessible. Heroku is a free hosting service for web apps than can be linked with GitHub to auto-deploy. Heroku also offers development tools so you can test and debug your app **locally**. 
+To develop web apps, it is important to mentally separate development from deployment. Development includes design, programming testing and debugging. Development is usually done locally on the developer's computer. Deploying is the process of publishing a web app to a server so users can access it, including compiling, installing executable in appropriate directories, checking connections to resources such as databases, and creating the URLs that clients will use to run the web app. In a large project, these issues can get quite complex and professional deployers take care of it. Our deployment will be simpler and student accessible. Heroku is a free hosting service for web apps than can be linked with GitHub to auto-deploy. Heroku also offers development tools so you can test and debug your app **locally**.
 
-In this repo, the Heroku app uses **Tomcat internally**, this in different from using standalone Tomcat or J2EE Glassfish. This means, deployment and development are done via Heroku commands. 
+In this repo, the Heroku app uses **Tomcat internally**, this in different from using standalone Tomcat or J2EE Glassfish. This means, deployment and development are done via Heroku commands.
 
 Please take a moment to explore each concept, technology, command, activity, and action used in this tutorial. We try to strike a balance between brevity and completeness, and welcome feedback and suggestions.
 
@@ -96,19 +96,19 @@ Go to your [Heroku dashboard](https://dashboard.heroku.com/apps). Click on **New
 Once in your Heroku app web page, select the "deploy" tab:
 
  a. set the deploy method to "Github"
- 
+
  b. authorize Heroku to access your GitHub repositories
- 
+
  c. select the recently created one
- 
+
  d. click on "connect"
- 
+
  e. activate automatic deploys
- 
+
  f. click on deploy the `master` branch (only this time so you can see the changes immediately)
- 
+
  g. Once your deploy is processed, click on "View"
- 
+
  Once in your Heroku app web page, select the **deploy** tab:
  1. Set the deploy method to **Github**
  2. Authorize Heroku to access your GitHub repositories
@@ -117,7 +117,7 @@ Once in your Heroku app web page, select the "deploy" tab:
  5. Activate automatic deploys
  6. Click on **deploy the master branch** (only this time so you can see the changes immediately)
  7. Once your deployment is processed, click on **View**
- 
+
 ### F. Updating your repo and redeploying
 
 Your changes will be redeployed automatically when you push them to your repo.
@@ -160,7 +160,7 @@ with this line:
 web: target\bin\webapp.bat
 ```
 
-**Note:** If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error: 
+**Note:** If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error:
 ```ShellSession
 "targetbinwebapp not found" error and then an "app crashed" error with code H10 ...
 ```
@@ -200,7 +200,12 @@ The line above handles **servlet mapping**, which makes its servlet instance ava
 
 Note: If your servlet mapping setup failed or is missing, you will not be able to access the URL `localhost:5000/servicePathName` or `yourWebsite/servicePathName`. Instead, the server will return a `404: Not found error`. Make sure the `@WebServlet` annotation is in the servlet Java file and the `localhost:5000/servicePathName` matches `@WebServlet.. urlPatterns = {"/servicePathName"}`.
 
-## E. Don’t forget to deploy your app to Heroku’s server!
+## E. Adding resources to your web app
+ To access files in your generated HTML, first add them to the `src/main/webapp/` folder, and then access them in your html like `<script src="aScript.js"/></script>` or `<link rel="stylesheet" type="text/css" href="aStyle.css">`.
+
+  For example, the resource `src/main/webapp/js/index.js` can be accessed in your generated HTML by adding the line `out.println("<script src=\"js/index.js\"/></script>");` to your servlet before closing the `<head>` element, a line like `out.println("</head>");`.
+
+## F. Don’t forget to deploy your app to Heroku’s server!
 
 Just because your app works locally, does not mean we can run and grade it. The two most common errors that novices make are:
 
@@ -291,12 +296,12 @@ SELECT name FROM test;
 ```
 ## D. Connecting to the database within your app: The Database Servlet
 Our example project has an example Java class, [DatabaseServlet.java](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java), which uses JDBC. This is but one of many possible ways to use databases. The following seven subsections explain how the database servlet was implemented.
- 
+
 ### 1. Manage and query your database
 [DatabaseServlet.java](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java) needs the database table to be created before it can run. Do this from your CLI terminal window:
 
 ```SQL
-CREATE TABLE entries( 
+CREATE TABLE entries(
   id serial PRIMARY KEY,
   name VARCHAR (50) NOT NULL,
   age INT  CHECK (age > 0  AND age <150) NOT NULL
@@ -421,10 +426,10 @@ The following code from the *doPost()* method adds new data into the database.
         out, saveStatusHTML, entriesManager.getAllAsHTMLTable());
        PrintTail(out);
  ```
- 
+
 The servlet uses database persistence via the **EntriesManager** instance to save (`save(name, age)`) a new entry, then renders all the entries in the database into an HTML table with *getAllAsHTMLTable()*.
 
-## 7. Resources 
+## 7. Resources
 For more details about how to create a Tomcat setup from scratch, go to the Dev Center guide on how to [Create a Java Web Application using Embedded Tomcat](https://devcenter.heroku.com/articles/create-a-java-web-application-using-embedded-tomcat).
 
 - [Git Tutorial](https://kbroman.org/github_tutorial/pages/init.html)
