@@ -1,4 +1,4 @@
-*Author:* David Gonzalez, spring 2021
+*Author:* David Gonzalez. Last update: spring 2022
 
 *Modified by:* Jeff Offutt, summer 2020
 
