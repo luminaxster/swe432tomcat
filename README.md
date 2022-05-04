@@ -160,7 +160,9 @@ with this line:
 web: target\bin\webapp.bat
 ```
 
-**Note:** If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error:
+#Troubleshooting Application Errors
+
+If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error:
 ```ShellSession
 "targetbinwebapp not found" error and then an "app crashed" error with code H10 ...
 ```
