@@ -118,6 +118,8 @@ Once in your Heroku app web page, select the "deploy" tab:
  6. Click on **deploy the master branch** (only this time so you can see the changes immediately)
  7. Once your deployment is processed, click on **View**
 
+**Note:** If you encounter an `Unathorized` prompt while integrating Github and Heroku, follow [this troubleshooting](https://github.com/luminaxster/swe432-heroku-react/blob/master/README.md#github-integration-unavailable).
+
 ### F. Updating your repo and redeploying
 
 Your changes will be redeployed automatically when you push them to your repo.
