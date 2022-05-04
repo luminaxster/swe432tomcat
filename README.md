@@ -160,7 +160,7 @@ with this line:
 web: target\bin\webapp.bat
 ```
 
-#Troubleshooting Application Errors
+##### Troubleshooting Application Errors
 
 If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error:
 ```ShellSession
