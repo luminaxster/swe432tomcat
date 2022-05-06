@@ -156,19 +156,21 @@ By default, the example repo’s [Procfile](https://github.com/luminaxster/swe43
 ```ShellSession
 web: sh target/bin/webapp
 ```
-with this line:
+with this line (**Only do this if your machine uses Windows, DO NOT PUSH THIS CHANGE TO YOUR REPO OR IT WIL BREAK YOUR DEPLOYMENT**):
 
 ```ShellSession
 web: target\bin\webapp.bat
 ```
 
-##### Troubleshooting Application Errors
+#### Troubleshooting Application Errors
 
 If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error:
 ```ShellSession
 "targetbinwebapp not found" error and then an "app crashed" error with code H10 ...
 ```
-You may also see this as an `Application Error` in your Heroku dashboard or your deployed web app. The goal is to determine if your application error is a compile-time error or a runtime error. Then choose how to address it. If you got to the "deployment done", that checks out a compile-time error to some extent, we have to confirm it before continuing. For example, if your Heroku app has a servlet generating a web app (HTML+CSS+JS), the application error may be a compile-time error in the browser. The application error caught by Heroku may be in your Java code, at runtime.
+You may also see this as an `Application Error` in your Heroku dashboard or your deployed web app, which may still be related to the `H10` deployment confiration error. By default, Heroku deployment nodes, where your app will be running on, are Unix-like environments, thus your Procfile is set as is.
+
+Now, the goal is to determine if your application error is a compile-time error or a runtime error. Then choose how to address it. If you got to the "deployment done", that checks out a compile-time error to some extent, we have to confirm it before continuing. For example, if your Heroku app has a servlet generating a web app (HTML+CSS+JS), the application error may be a compile-time error in the browser. The application error caught by Heroku may be in your Java code, at runtime.
 
 Let's proceed to the next step: Are the Heroku logs empty? More details [here](htps://help.heroku.com/UMAUQ4UF/why-am-i-seeing-application-error). In general, check [Heroku Error Codes](https://devcenter.heroku.com/articles/error-codes)(H12, R14, R15, H10, H14 etc.).
 
