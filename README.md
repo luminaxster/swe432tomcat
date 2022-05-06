@@ -151,18 +151,19 @@ If your machine runs Windows, add Maven’s path to the PATH property in the sys
 #### B. Installing Heroku’s CLI
 If you have not installed the Heroku CLI before, download it from the [Heroku Dev Center](https://devcenter.heroku.com/articles/heroku-cli).
 
+##### Windows Users Only
 By default, the example repo’s [Procfile](https://github.com/luminaxster/swe432tomcat/blob/master/Procfile) is set for Unix-like machines using “sh” as the shell command in Unix. For Windows, replace the following line in the Procfile:
 
 ```ShellSession
 web: sh target/bin/webapp
 ```
-with this line (**Only do this if your machine uses Windows, DO NOT PUSH THIS CHANGE TO YOUR REPO OR IT WIL BREAK YOUR DEPLOYMENT**):
+with this line (**This is Windows Users Only, DO NOT PUSH THIS CHANGE TO YOUR REPO OR IT WIL BREAK YOUR DEPLOYMENT**):
 
 ```ShellSession
 web: target\bin\webapp.bat
 ```
 
-#### Troubleshooting Application Errors
+##### Troubleshooting Application Errors
 
 If you are Windows user, do not push your Procfile to your remote repo. That would cause the following error:
 ```ShellSession
