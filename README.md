@@ -168,6 +168,12 @@ If you are Windows user, do not push your Procfile to your remote repo. That wou
 ```ShellSession
 "targetbinwebapp not found" error and then an "app crashed" error with code H10 ...
 ```
+You may also see this as an `Application Error` in your Heroku dashboard or your deployed web app. The goal is to determine if your application error is a compile-time error or a runtime error. Then choose how to address it. If you got to the "deployment done", that checks out a compile-time error to some extent, we have to confirm it before continuing. For example, if your Heroku app has a servlet generating a web app (HTML+CSS+JS), the application error may be a compile-time error in the browser. The application error caught by Heroku may be in your Java code, at runtime.
+
+Let's proceed to the next step: Are the Heroku logs empty? More details [here](htps://help.heroku.com/UMAUQ4UF/why-am-i-seeing-application-error). In general, check [Heroku Error Codes](https://devcenter.heroku.com/articles/error-codes)(H12, R14, R15, H10, H14 etc.).
+
+
+If still, the logs are not verbose enough, check if the application runs **locally** under the same behavior. If the app fails, the terminal may show more error details in the stack trace to pinpoint the defective code location. 
 
 ### C. Build and run your app
 To run an app contained in your repo, look up for the file `POM.xml` in your repo’s root folder. Maven uses this configuration file to build your app so Heroku can run it. Run the following two commands to build and run your app:
