@@ -59,7 +59,7 @@ Your most recent web app version in now deployed.
 -----> Discovering process types
        Procfile declares types -> (none)
 ```
-Add it to your repo and push the changes. Similarly, if you see a H10 in your logs, you may have pushed an broken Procfile (Perhaps, you changed it to work locally in a Windows machine).  
+Add it to your repo and push the changes. Similarly, if you see a H10 in your logs, you may have pushed an broken Procfile (Perhaps, you changed it to work locally in a Windows machine). For more details, go to this [section](https://github.com/luminaxster/swe432tomcat/blob/main/README.md#troubleshooting-application-errors).  
 
 ### Heroku Dashboard
 In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you may want to check these elements:
@@ -202,7 +202,11 @@ If you are Windows user, do not push your Procfile to your remote repo. That wou
 ```ShellSession
 "targetbinwebapp not found" error and then an "app crashed" error with code H10 ...
 ```
-You may also see this as an `Application Error` in your Heroku dashboard or your deployed web app, which may still be related to the `H10` deployment confiration error. By default, Heroku deployment nodes, where your app will be running on, are Unix-like environments, thus your Procfile is set as is.
+Before pushing changes to your repo, make sure the content of the Procfile contains:
+```ShellSession
+web: sh target/bin/webapp
+```
+You may also see this as an `Application Error` in your Heroku dashboard or your deployed web app, which may still be related to the `H10` deployment confiration error. By default, Heroku deployment nodes, where your app will be running on, are Unix-like environments, thus your Procfile is set as is. 
 
 Now, the goal is to determine if your application error is a compile-time error or a runtime error. Then choose how to address it. If you got to the "deployment done", that checks out a compile-time error to some extent, we have to confirm it before continuing. For example, if your Heroku app has a servlet generating a web app (HTML+CSS+JS), the application error may be a compile-time error in the browser. The application error caught by Heroku may be in your Java code, at runtime.
 
