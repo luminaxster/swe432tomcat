@@ -28,6 +28,39 @@ git a . & git c -m "TODO: I really should explain these changes" & git push
 mvn package & heroku local
 ```
 
+### Quick Heroku Git deployment
+Go to [Heroku](https://dashboard.heroku.com/apps) and create a new app. I chose `swe432tomcat2`.
+
+Follow these commnands in your terminal:
+
+```shell
+git clone https://github.com/luminaxster/swe432tomcat.git
+cd swe432tomcat/
+heroku git:remote -a swe432tomcat2
+git add .
+git commit -am "first Heroku Git push"
+git push heroku
+```
+You will see your deployment logs in your terminal. At the end, make sure you see these lines:
+```shell
+remote:        [INFO] BUILD SUCCESS
+...
+remote: -----> Discovering process types
+remote:        Procfile declares types -> web
+...
+remote: -----> Launching...
+remote:        Released v5
+remote:        https://swe432tomcat2.herokuapp.com/ deployed to Heroku
+```
+Your most recent web app version in now deployed.
+
+**Note:** If your Procfile is missing, you will see an error like this:
+```shell
+-----> Discovering process types
+       Procfile declares types -> (none)
+```
+Add it to your repo and push the changes. Similarly, if you see a H10 in your logs, you may have pushed an broken Procfile (Perhaps, you changed it to work locally in a Windows machine).  
+
 ### Heroku Dashboard
 In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you may want to check these elements:
  - **Open App:** This button will open a new browser window with the URL of your currently deployed app.
