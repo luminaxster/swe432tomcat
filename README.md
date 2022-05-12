@@ -61,13 +61,13 @@ git commit -am "Another Heroku Git push"
 git push heroku
 ```
 
-**Note:** If, somehow, your **[Procfile](https://github.com/luminaxster/swe432tomcat/blob/main/Procfile)** is missing, you will see an log line like this:
+**Note:** If, somehow, your **[Procfile](https://github.com/luminaxster/swe432tomcat/blob/main/Procfile)** is missing, you will see a log line like this:
 ```shell
 -----> Discovering process types
        Procfile declares types -> (none)
 ```
 Make sure the its location and content matches this repos's. The push the changes.
-Similarly, if you see a H10 in your logs, you may have pushed an broken Procfile (Perhaps, you changed it to work locally in a Windows machine). For more details, go to this [section](https://github.com/luminaxster/swe432tomcat/blob/main/README.md#troubleshooting-application-errors).  
+Similarly, if you see a H10 in your logs, you may have pushed a broken Procfile (Perhaps, you changed it to work locally in a Windows machine). For more details, go to this [section](https://github.com/luminaxster/swe432tomcat/blob/main/README.md#troubleshooting-application-errors).  
 
 ### Heroku Dashboard
 In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you may want to check these elements:
