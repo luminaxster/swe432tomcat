@@ -33,7 +33,7 @@ Go to [Heroku](https://dashboard.heroku.com/apps) and create a new app (remember
 
 Follow these commands in your terminal, replace `swe432tomcat2` with your app's name:
 
-```shell
+```ShellSession
 git clone https://github.com/luminaxster/swe432tomcat.git
 cd swe432tomcat/
 heroku git:remote -a swe432tomcat2
@@ -42,7 +42,7 @@ git commit -am "first Heroku Git push"
 git push heroku
 ```
 You will see your deployment logs in your terminal. At the end, make sure you see these lines:
-```shell
+```ShellSession
 remote:        [INFO] BUILD SUCCESS
 ...
 remote: -----> Discovering process types
@@ -56,13 +56,11 @@ remote:        https://swe432tomcat2.herokuapp.com/ deployed to Heroku
 
 From now on, if you want to redeploy you app with the latest version of your code, rerun these commands:
 ```shell
-git add .
-git commit -am "Another Heroku Git push"
-git push heroku
+git add . & git commit -am "Another Heroku Git push" & git push heroku
 ```
 
 **Note:** If, somehow, your **[Procfile](https://github.com/luminaxster/swe432tomcat/blob/main/Procfile)** is missing, you will see a log line like this:
-```shell
+```ShellSession
 -----> Discovering process types
        Procfile declares types -> (none)
 ```
