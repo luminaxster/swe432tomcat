@@ -16,9 +16,9 @@ In this repo, the Heroku app uses **Tomcat internally**, this in different from 
 Please take a moment to explore each concept, technology, command, activity, and action used in this tutorial. We try to strike a balance between brevity and completeness, and welcome feedback and suggestions.
 
 ## 2. Quick Reference
-These command line statements are here for a quick reminder of details in the tutorial.
+These command line statements are here for a quick reminder of details in the tutorial. Preferably, Use them if you have read this guide before.
 
-### Redeploying the app by pushing changes to the remote repo
+### Redeploying the app by pushing changes to the GitHub remote repo
 ```ShellSession
 git a . & git c -m "TODO: I really should explain these changes" & git push
 ```
@@ -28,7 +28,7 @@ git a . & git c -m "TODO: I really should explain these changes" & git push
 mvn package & heroku local
 ```
 
-### Quick Heroku Git deployment
+### Heroku Git deployment
 Go to [Heroku](https://dashboard.heroku.com/apps) and create a new app (remember the name of the app). I chose `swe432tomcat2`.
 
 Follow these commands in your terminal, replace `swe432tomcat2` with your app's name:
