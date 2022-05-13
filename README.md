@@ -85,7 +85,7 @@ You may optionally use Heroku's [GitHub student package](https://www.heroku.com/
 
 Your assignments' repo must be private at all times. To grade your assignments, we must have access to your GitHub repo, thus you must add both the TA and instructor as contributors. We will share our usernames on the discussion board.
 
-## 2. Deployment: Create a Git repo (repository) and and link it to a Heroku app
+## 2. Deployment: Create a Git repo (repository) and link it to a Heroku app
 You can install Git on your local machine from [Git's download site](https://git-scm.com/downloads). Now, follow steps A—F to bring this repo into your Github account:
 
 ### A. Get this repo locally in your machine:
