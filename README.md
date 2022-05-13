@@ -8,14 +8,14 @@ This tutorial explains how to deploy and develop a Heroku app that runs servlets
 
 Check the currently deployed version: [https://swe432tomcat.herokuapp.com](https://swe432tomcat.herokuapp.com)
 
-## 1. Prelude
+## Prelude
 To develop web apps, it is important to mentally separate development from deployment. Development includes design, programming testing and debugging. Development is usually done locally on the developer's computer. Deploying is the process of publishing a web app to a server so users can access it, including compiling, installing executable in appropriate directories, checking connections to resources such as databases, and creating the URLs that clients will use to run the web app. In a large project, these issues can get quite complex and professional deployers take care of it. Our deployment will be simpler and student accessible. Heroku is a free hosting service for web apps than can be linked with GitHub to auto-deploy. Heroku also offers development tools so you can test and debug your app **locally**.
 
 In this repo, the Heroku app uses **Tomcat internally**, this in different from using standalone Tomcat or J2EE Glassfish. This means, deployment and development are done via Heroku commands.
 
 Please take a moment to explore each concept, technology, command, activity, and action used in this tutorial. We try to strike a balance between brevity and completeness, and welcome feedback and suggestions.
 
-## 2. Quick Reference
+## Quick Reference
 These command line statements are here for a quick reminder of details in the tutorial. **Preferably**, use them after you have read the whole tutorial.
 
 ### Redeploying the app by pushing changes to the GitHub remote repo
@@ -73,7 +73,7 @@ In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app
  - **Activity:** This tab contains all logs of each deployment attempt, check it if you get errors in your web app. Run the app locally to debug them.
  - **Settings:** this tab lets you check your build packs, make sure you are using `heroku/java` for this project.
 
-## 3. Create GitHub and Heroku accounts
+## 1. Create GitHub and Heroku accounts
 
 You can create free accounts on both platforms (you do not need to provide any payment info).
 
@@ -86,7 +86,7 @@ You may optionally use Heroku's [GitHub student package](https://www.heroku.com/
 
 Your assignments' repo must be private at all times. To grade your assignments, we must have access to your GitHub repo, thus you must add both the TA and instructor as contributors. We will share our usernames on the discussion board.
 
-## 4. Deployment: Create a Git repo (repository) and and link it to a Heroku app
+## 2. Deployment: Create a Git repo (repository) and and link it to a Heroku app
 You can install Git on your local machine from [Git's download site](https://git-scm.com/downloads). Now, follow steps A—F to bring this repo into your Github account:
 
 ### A. Get this repo locally in your machine:
@@ -163,7 +163,7 @@ Once in your Heroku app web page, select the "deploy" tab:
 
 Your changes will be redeployed automatically when you push them to your repo.
 
-## 5. Development: How to run web apps locally
+## 3. Development: How to run web apps locally
 
 Before deploying web app to GitHub & Heroku, developers program, debug, and test apps locally. This section explains how to use Apache Maven and Heroku's command line interface (CLI) to run web apps locally. We walk through installing Maven and Heroku, then running an app locally, updating an app, and continuous loop deployment.
 
