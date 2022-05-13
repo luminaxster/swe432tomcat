@@ -167,7 +167,7 @@ Your changes will be redeployed automatically when you push them to your repo.
 
 Before deploying web app to GitHub & Heroku, developers program, debug, and test apps locally. This section explains how to use Apache Maven and Heroku's command line interface (CLI) to run web apps locally. We walk through installing Maven and Heroku, then running an app locally, updating an app, and continuous loop deployment.
 
-#### A. Installing Apache Maven
+### A. Installing Apache Maven
 
 If you have not installed Apache Maven before, get the binaries from the [Apache Maven Project](https://maven.apache.org/download.cgi), and follow the instructions from Maven’ [installation page](https://maven.apache.org/install.html).
 
@@ -187,10 +187,10 @@ If your machine runs Windows, add Maven’s path to the PATH property in the sys
 
 **Note:** You will need to open a new terminal window to reflect the path change.
 
-#### B. Installing Heroku’s CLI
+### B. Installing Heroku’s CLI
 If you have not installed the Heroku CLI before, download it from the [Heroku Dev Center](https://devcenter.heroku.com/articles/heroku-cli).
 
-##### Windows Users Only
+#### Windows Users Only
 By default, the example repo’s [Procfile](https://github.com/luminaxster/swe432tomcat/blob/master/Procfile) is set for Unix-like machines using “sh” as the shell command in Unix. For Windows, replace the following line in the Procfile:
 
 ```ShellSession
@@ -256,18 +256,18 @@ The line above handles **servlet mapping**, which makes its servlet instance ava
 
 Note: If your servlet mapping setup failed or is missing, you will not be able to access the URL `localhost:5000/servicePathName` or `yourWebsite/servicePathName`. Instead, the server will return a `404: Not found error`. Make sure the `@WebServlet` annotation is in the servlet Java file and the `localhost:5000/servicePathName` matches `@WebServlet.. urlPatterns = {"/servicePathName"}`.
 
-## E. Adding resources to your web app
+### E. Adding resources to your web app
  To access files in your generated HTML, first add them to the `src/main/webapp/` folder, and then access them in your html like `<script src="aScript.js"/></script>` or `<link rel="stylesheet" type="text/css" href="aStyle.css">`.
 
   For example, the resource `src/main/webapp/js/index.js` can be accessed in your generated HTML by adding the line `out.println("<script src=\"js/index.js\"/></script>");` to your servlet before closing the `<head>` element, a line like `out.println("</head>");`.
 
-## F. Don’t forget to deploy your app to Heroku’s server!
+### F. Don’t forget to deploy your app to Heroku’s server!
 
 Just because your app works locally, does not mean we can run and grade it. The two most common errors that novices make are:
 
  1. Forgetting to push the changes to your GitHub repo. When you are ready to share, be sure to push your app to your GitHub repo. It will automatically be deployed through Heroku.
  2. Forgetting to deploy-test the app. Sometimes apps that work correctly on your local machine will NOT work on the server. Common issues are path names, such as the difference between `/` and `\` on Windows and Unix systems, capitalization (Windows treats upper and lower case letters the same, but Unix does not), and external resources such as files and databases. **Be sure to run your app on the server to ensure it still works!**.
-# 6. Persistence: How to use a database with Heroku
+## 6. Persistence: How to use a database with Heroku
 **You only need this section to persist data into a database and can skip it otherwise**.
 
 Accessing a database may be different on your local machine and on Heroku—this description is for Heroku only. Also note that this is not a general tutorial on using databases from Java programs, but just the specific incantations your program needs to use a Postgres database on Heroku.
@@ -283,7 +283,7 @@ Note that `<your_heroku_app_name>` is the name of your Heroku web application.
 This section is quite long and is not necessary to run servlets or JSPs. This section discusses installation, configuring, using the command line interface (CLI) and Java to use the database.
 
 
-## A. Install PostgreSQL
+### A. Install PostgreSQL
 Get Postgres from the [Postgres download page](https://postgresapp.com/downloads.html).
 
 *Windows*: The wizard will install the DB, services, and basic tools needed to manage and query the database.
@@ -300,7 +300,7 @@ which psql
 
 It should return a file system path that looks like this:`/Applications/Postgres.app/Contents/Versions/latest/bin/psql`.
 
-## B. Configure the connection to your remote DB add-ons in Heroku
+### B. Configure the connection to your remote DB add-ons in Heroku
 Java programs access databases using a library package called Java DataBase Connectivity (JDBC). This tutorial does not teach JDBC, but you will need to use it. For your Java applications to access the DB via JDBC, set up the connection as follows:
 
 If you use a *Unix-Like* system, run the command:
@@ -350,10 +350,10 @@ CREATE TABLE test(id SERIAL PRIMARY KEY, value VARCHAR (50) NOT NULL);
 INSERT INTO test (value) VALUES ('a value');
 SELECT name FROM test;
 ```
-## D. Connecting to the database within your app: The Database Servlet
+### D. Connecting to the database within your app: The Database Servlet
 Our example project has an example Java class, [DatabaseServlet.java](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java), which uses JDBC. This is but one of many possible ways to use databases. The following seven subsections explain how the database servlet was implemented.
 
-### 1. Manage and query your database
+#### I. Manage and query your database
 [DatabaseServlet.java](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java) needs the database table to be created before it can run. Do this from your CLI terminal window:
 
 ```SQL
@@ -370,7 +370,7 @@ INSERT INTO entries (name, age) VALUES ('Logan', 149);
 SELECT name, age FROM entries;
 ```
 
-### 2. Add Postgres to your web app
+#### II. Add Postgres to your web app
 You need to add Postgres to your dependencies in your `pom.xml` file:
 ```XML
 </dependencies>
@@ -383,7 +383,7 @@ You need to add Postgres to your dependencies in your `pom.xml` file:
     ...
 </dependencies>
 ```
-### 3. Sanity Check
+#### III. Sanity Check
 To make sure you have the database set up correctly, run the web app locally, from a terminal in your app's root folder:
 ```ShellSession
 mvn package
@@ -397,7 +397,7 @@ Your Tomcat server should be up and running a `localhost:5000`, and the database
 
 Note: To stop the server from running, press `Ctrl+C` or close the terminal.
 
-### 4. Connecting to the database in the servlet
+#### IV. Connecting to the database in the servlet
 ```Java
 ...
 private class EntriesManager{
@@ -411,7 +411,7 @@ private class EntriesManager{
 These statement add Postgres as a dependency and configure the environment variable. The statement `String dbUrl = System.getenv("JDBC_DATABASE_URL");` uses the environment variable `JDBC_DATABASE_URL`. You can check its value with the command `echo $JDBC_DATABASE_URL`. The statement `return DriverManager.getConnection(dbUrl);`retrieves the Postgres database driver from the previous URL, then connects to the database with the credentials provided in the URL.
 **Troubleshooting:** You may get an error like `java.sql.SQLException: The url cannot be null`. This means “JDBC_DATABASE_URL” is not saved in your profile as described in step *6.B* above.
 
-### 5. Persisting data into the database
+#### V. Persisting data into the database
 The following code is taken from method *save()* in [DatabaseServlet.java](https://github.com/luminaxster/swe432tomcat/blob/master/src/main/java/servlet/DatabaseServlet.java):
 ```Java
 ...
@@ -432,7 +432,7 @@ After getting a `connection`, the method prepares a statement to insert a row in
 
 **Important:** Prepared statements prevent some types of SQL injection attacks that other API methods allow.
 
-### 6. Querying data from the database
+#### VI. Querying data from the database
 The following code from method *getAllAsHTMLTable()* retrieves all names and ages from the entries table, then displays them in an HTML table.
 ```Java
 public String getAllAsHTMLTable(){
@@ -462,7 +462,7 @@ After getting a connection to the database, executing the query returns an itera
 
 **Important:** Using only `executeQuery()` to make querys prevents some types of SQL injection attacks that other API methods allow. For instance, using `executeUpdate()` to make queries can allow attackers to delete database tables by appending a delete command to the update statement: `; delete from entries`.
 
-### 7. Important: Avoid cross-side scripting (XSS) attacks
+#### VII. Important: Avoid cross-side scripting (XSS) attacks
 
 ![Funny comic strip](https://imgs.xkcd.com/comics/exploits_of_a_mom.png "Special thanks to Nathan Harvey for sharing this (spring 2021 class)")
 
@@ -470,7 +470,7 @@ A common way to attack web apps is to inject malicious code into data that origi
 
 **Always** use **sanitized** user inputs to assemble statements, and use **prepared statements** when concatenating **user inputs** in your queries or updates.
 
-### 8. Persisting data into a database from a servlet
+#### VIII. Persisting data into a database from a servlet
 The following code from the *doPost()* method adds new data into the database.
 
 ```Java
@@ -488,7 +488,7 @@ The following code from the *doPost()* method adds new data into the database.
 
 The servlet uses database persistence via the **EntriesManager** instance to save (`save(name, age)`) a new entry, then renders all the entries in the database into an HTML table with *getAllAsHTMLTable()*.
 
-## 7. Resources
+## 5. Resources
 For more details about how to create a Tomcat setup from scratch, go to the Dev Center guide on how to [Create a Java Web Application using Embedded Tomcat](https://devcenter.heroku.com/articles/create-a-java-web-application-using-embedded-tomcat).
 
 - [Git Tutorial](https://kbroman.org/github_tutorial/pages/init.html)
