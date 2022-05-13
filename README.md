@@ -266,7 +266,7 @@ Just because your app works locally, does not mean we can run and grade it. The 
 
  1. Forgetting to push the changes to your GitHub repo. When you are ready to share, be sure to push your app to your GitHub repo. It will automatically be deployed through Heroku.
  2. Forgetting to deploy-test the app. Sometimes apps that work correctly on your local machine will NOT work on the server. Common issues are path names, such as the difference between `/` and `\` on Windows and Unix systems, capitalization (Windows treats upper and lower case letters the same, but Unix does not), and external resources such as files and databases. **Be sure to run your app on the server to ensure it still works!**.
-## 6. Persistence: How to use a database with Heroku
+## 4. Persistence: How to use a database with Heroku
 **You only need this section to persist data into a database and can skip it otherwise**.
 
 Accessing a database may be different on your local machine and on Heroku—this description is for Heroku only. Also note that this is not a general tutorial on using databases from Java programs, but just the specific incantations your program needs to use a Postgres database on Heroku.
