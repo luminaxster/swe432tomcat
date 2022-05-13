@@ -16,7 +16,7 @@ In this repo, the Heroku app uses **Tomcat internally**, this in different from 
 Please take a moment to explore each concept, technology, command, activity, and action used in this tutorial. We try to strike a balance between brevity and completeness, and welcome feedback and suggestions.
 
 ## 2. Quick Reference
-These command line statements are here for a quick reminder of details in the tutorial. Preferably, Use them if you have read this guide before.
+These command line statements are here for a quick reminder of details in the tutorial. **Preferably**, use them after you have read the whole tutorial.
 
 ### Redeploying the app by pushing changes to the GitHub remote repo
 ```ShellSession
