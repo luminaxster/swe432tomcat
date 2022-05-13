@@ -27,6 +27,11 @@ git a . & git c -m "TODO: I really should explain these changes" & git push
 ```ShellSession
 mvn package & heroku local
 ```
+### Heroku Dashboard
+In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you may want to check these elements:
+ - **Open App:** This button will open a new browser window with the URL of your currently deployed app.
+ - **Activity:** This tab contains all logs of each deployment attempt, check it if you get errors in your web app. Run the app locally to debug them.
+ - **Settings:** this tab lets you check your build packs, make sure you are using `heroku/java` for this project.
 
 ### Heroku Git deployment
 Go to [Heroku](https://dashboard.heroku.com/apps) and create a new app (remember the name of the app). I chose `swe432tomcat2`.
@@ -66,12 +71,6 @@ git add . & git commit -am "Another Heroku Git push" & git push heroku
 ```
 Make sure the its location and content matches this repos's, and redeploy your app.
 Similarly, if you see a `H10` error in your logs or an application error in your web app, you may have pushed a broken Procfile (Perhaps, you changed it to work locally in a Windows machine). For more details, go to this [section](https://github.com/luminaxster/swe432tomcat/blob/main/README.md#troubleshooting-application-errors).  
-
-### Heroku Dashboard
-In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you may want to check these elements:
- - **Open App:** This button will open a new browser window with the URL of your currently deployed app.
- - **Activity:** This tab contains all logs of each deployment attempt, check it if you get errors in your web app. Run the app locally to debug them.
- - **Settings:** this tab lets you check your build packs, make sure you are using `heroku/java` for this project.
 
 ## 1. Create GitHub and Heroku accounts
 
