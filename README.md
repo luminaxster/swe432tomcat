@@ -20,12 +20,12 @@ These command line statements are here for a quick reminder of details in the tu
 
 ### Redeploying the app by pushing changes to the GitHub remote repo
 ```ShellSession
-git a . & git c -m "TODO: I really should explain these changes" & git push
+git a . && git c -m "TODO: I really should explain these changes" && git push
 ```
 
 ### Rerunning the app locally after changes
 ```ShellSession
-mvn package & heroku local
+mvn package && heroku local
 ```
 ### Heroku Dashboard
 In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you may want to check these elements:
@@ -61,7 +61,7 @@ remote:        https://swe432tomcat2.herokuapp.com/ deployed to Heroku
 
 From now on, if you want to **redeploy** your app with the latest version of your code, rerun these commands:
 ```shell
-git add . & git commit -am "Another Heroku Git push" & git push heroku
+git add . && git commit -am "Another Heroku Git push" && git push heroku
 ```
 
 **Note:** If, somehow, your **[Procfile](https://github.com/luminaxster/swe432tomcat/blob/main/Procfile)** is missing, you will see a log line like this:
