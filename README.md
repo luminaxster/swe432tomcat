@@ -228,6 +228,10 @@ mvn package
 heroku local
 ```
 
+Use `heroku local`, from now on, to recompile your code after you edit it, so you can observe the changes locally.
+
+Use `mvn package`,  if and only if, it is the first time you set up the project (above) or when you add new packages to your POM.xml.
+
 If the commands succeed, you should be able to access your app at: `http://localhost:5000`.
 
 ### D. Adding a new servlet
