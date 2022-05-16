@@ -25,7 +25,7 @@ git a . && git c -m "TODO: I really should explain these changes" && git push
 
 ### Rerunning the app locally after changes
 ```ShellSession
-mvn package && heroku local
+heroku local
 ```
 ### Heroku Dashboard
 In your [dashboard](https://dashboard.heroku.com/apps/), after selecting the app related to this project, you may want to check these elements:
